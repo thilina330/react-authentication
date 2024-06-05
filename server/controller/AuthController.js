@@ -34,6 +34,12 @@ exports.signup = async (req, res, next) => {
       status: "success",
       message: "User registered successfully",
       token,
+      user: {
+        _id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role,
+      },
     });
   } catch (error) {
     if (error.code === 11000) {
@@ -52,15 +58,19 @@ exports.signup = async (req, res, next) => {
 exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-
+    // pass the object
     const user = await User.findOne({ email });
+
     if (!user) {
       return next(new createError("user not found!"), 404);
     }
+    // check password  (true)
     const isPasswordValid = await bcrypt.compare(password, user.password);
+
     if (!isPasswordValid) {
       return next(new createError("Invalid Email Or Password!", 401));
     }
+    // create token
     const token = jwt.sign(
       { _id: User._id },
       process.env.JWT_SECRET || "secretkey123",

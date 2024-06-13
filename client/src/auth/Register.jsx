@@ -7,11 +7,13 @@ import useSignUp from '../hooks/useSignUp';
 
 const Register = () => {
 
-  const {loading,error,registerUser} = useSignUp()
+  const {loading,error,registerUser} = useSignUp();
 
   const handleRegister = (values) => {
-     registerUser(values)
+   
+     registerUser(values);
   }
+  // console.log(values);
 
   return (
    <Card className='form-contanier'>
@@ -68,13 +70,13 @@ const Register = () => {
                   }
                   <Form.Item >
                     <Button 
-                    type={`${loading ? '' : ''}`} 
+                    type={`${loading ? '' : 'primary'}`}
                     size="large" htmlType="submit" 
                     className='btn'
                   
                     >
-                     {loading? <Span/> : 'Create Account'}
-                   
+                     {loading? "Create Account..." : 'Create Account'}
+                
                     </Button>
                   </Form.Item>
 

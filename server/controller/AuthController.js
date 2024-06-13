@@ -11,7 +11,8 @@ exports.signup = async (req, res, next) => {
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      return next(new createError("User with this email already exists!", 400));
+      //console.log("existing user in signup" + existingUser);
+      res.status(400).json({ error: "User with this email already exists!" });
     }
 
     const hashPassword = await bcrypt.hash(password, 12);
@@ -56,10 +57,13 @@ exports.signup = async (req, res, next) => {
 // Login user
 
 exports.login = async (req, res, next) => {
+  console.log("sada");
   try {
     const { email, password } = req.body;
     // pass the object
     const user = await User.findOne({ email });
+
+    console.log(user);
 
     if (!user) {
       return next(new createError("user not found!"), 404);

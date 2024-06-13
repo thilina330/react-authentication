@@ -1,11 +1,18 @@
-import React from 'react'
+import React from 'react';
+import { Button } from 'antd';
+import { useAuth } from '../context/AuthContext';
+//import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
-const Dashbord = () => {
+
+const Dashboard = () => {
+  const { logOut } = useAuth();
+  
   return (
-    <div>
-      dashbord
-    </div>
-  )
+    <>
+      <div>Dashboard</div>
+      <Button onClick={logOut}>Logout</Button>
+    </>
+  );
 }
 
-export default Dashbord
+export  default Dashboard;
